@@ -4,13 +4,21 @@ import os
 import sys
 
 def ccwc():
-    if len(sys.argv) != 3 or sys.argv[1] != "-c":
-        sys.exit("Not proper syntax")
-    file_path = sys.argv[2]
-    try:
-        print(os.path.getsize(file_path))
-    except:
-        print("$(file_path) not found")
+    if len(sys.argv) != 3 or (sys.argv[1] != "-c" and sys.argv[1] != "-l"):
+        sys.exit("Use the appropriate argument")
+
+    if sys.argv[1] == "-c":
+        file_path = sys.argv[2]
+        try:
+            print(os.path.getsize(file_path))
+        except:
+            print("$(file_path) not found")
+    elif sys.argv[1] == "-l":
+        file_path2= sys.argv[2]
+        with open(file_path2,"r") as fp:
+            lines= len(fp.readlines())
+        print(lines)
+    
 if __name__=="__main__":
     ccwc()
 
