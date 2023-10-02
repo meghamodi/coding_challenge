@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+
+def ccwc():
+    if len(sys.argv) != 3 or sys.argv[1] != "-c":
+        sys.exit("Not proper syntax")
+    file_path = sys.argv[2]
+    try:
+        print(os.path.getsize(file_path))
+    except:
+        print("$(file_path) not found")
+if __name__=="__main__":
+    ccwc()
+
+
