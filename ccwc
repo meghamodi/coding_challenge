@@ -4,20 +4,58 @@ import os
 import sys
 
 def ccwc():
-    if len(sys.argv) != 3 or (sys.argv[1] != "-c" and sys.argv[1] != "-l"):
-        sys.exit("Use the appropriate argument")
 
-    if sys.argv[1] == "-c":
-        file_path = sys.argv[2]
-        try:
-            print(os.path.getsize(file_path))
-        except:
-            print("$(file_path) not found")
-    elif sys.argv[1] == "-l":
-        file_path2= sys.argv[2]
-        with open(file_path2,"r") as fp:
-            lines= len(fp.readlines())
-        print(lines)
+    if len(sys.argv) == 2:
+        options=["-c","-l","-w"]
+        file_path= sys.argv[1]
+
+
+    elif len(sys.argv) == 3:
+        option,file_path= sys.argv[1],sys.argv[2]
+        options=[option]
+
+    else:
+        sys.exit("Use appropriate syntax")
+    
+    try:
+        result={}
+        if "-c" in options:
+        
+            result["-c"]= os.path.getsize(file_path)
+
+        if "-l" in options:
+            with open(file_path,"r") as fp:
+                lines= len(fp.readlines())
+            result["-l"] = lines
+        if "-w" in options:
+            count=0
+            with open(file_path,"r") as fp:
+                for line in fp:
+                    words= line.split()
+                    count += len(words)
+            result["-w"] = count
+        elif sys.argv[1]=="-m":
+            try:
+                with open(file_path,"r") as fp:
+                    char_count=0
+                    for line in fp:
+                        words = line.split()
+                        char_count += sum(len(char) for char in words)
+                print(char_count)
+            except:
+                print(os.path.getsize(file_path))
+        output =' '.join(str(result[option]) for option in options)
+        print(output +" "+ file_path)
+    except Exception as e:
+        sys.exit(str(e))
+
+        
+
+    
+
+
+        
+
     
 if __name__=="__main__":
     ccwc()
